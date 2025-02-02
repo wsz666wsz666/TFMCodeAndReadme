@@ -1,0 +1,82 @@
+
+# RAK7243 Gateway Configuration Guide
+
+## 1. Accessing the Gateway
+
+The RAK7243 offers multiple access methods:
+
+### a. Wi-Fi Access Point Mode
+
+1. **Wi-Fi Connection**:
+   - Once powered on, the gateway will broadcast a Wi-Fi signal with an SSID similar to `Rakwireless_XXXX`, where `XXXX` are the last 2 bytes of the device's MAC address.
+   - Connect to this network using the password: `rakwireless`.
+
+2. **SSH Access**:
+   - Default IP address: `192.168.230.1`.
+   - Use an SSH client (such as [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/)) to connect.
+   - Default credentials:
+     - Username: `pi`
+     - Password: `raspberry`
+
+### b. Ethernet Connection
+
+1. Connect your computer to the gateway using an Ethernet cable.
+
+2. **SSH Access**:
+   - Gateway IP address: `192.168.10.10`.
+   - Use an SSH client to connect with the same credentials mentioned above.
+
+---
+
+## 2. Configuring the Gateway
+
+Once connected to the gateway:
+
+1. Run the command: `sudo gateway-config`.
+
+2. Select the **LoRa Server Configuration** option to connect to a LoRaWAN server, such as **The Things Network (TTN)**.
+
+### Configuring with The Things Network (TTN)
+
+To connect the gateway to TTN, follow these steps:
+
+1. **Register Your Gateway on TTN**:
+   - Log in to the [The Things Network Console](https://console.cloud.thethings.network/).
+   - In the **Gateways** menu, select **Register Gateway**.
+   - Provide the following information:
+     - **Gateway EUI**: Obtain this value by running the command `sudo gateway-version` on the gateway.
+     - **Frequency Plan**: Select the frequency plan for your region.
+     - **Router**: Choose the nearest router, such as `ttn-router-eu`.
+
+2. **Configure TTN on the Gateway**:
+   - In the `gateway-config` menu, select the option to configure the LoRa server.
+   - Enter the corresponding TTN server address: `router.<your_region>.thethings.network`.
+
+---
+
+## 3. Connecting to the Internet
+
+The gateway requires Internet access to function properly:
+
+- **Wi-Fi Client Mode**: Configure the gateway to connect to an existing Wi-Fi network from the `gateway-config` menu.
+- **Ethernet Connection**: Connect the gateway directly to a router or modem using an Ethernet cable.
+
+---
+
+## 4. Verifying Gateway Status
+
+To ensure the gateway is operational:
+
+1. **Gateway Status**:
+   - Access the gateway via SSH and run the command: `sudo systemctl status ttn-gateway`.
+   - Confirm that the status is `active (running)`.
+
+2. **Status on TTN**:
+   - Log in to the TTN console and verify that the gateway is registered as `online`.
+   - Check that it is sending and receiving data correctly.
+
+---
+
+This README contains the necessary steps to configure and verify the RAK7243 gateway based on the official documentation.
+
+##note :In case it is not possible to connect to TTN after completing the corresponding configurations, it will be necessary to edit the packet-forwarder config file, which corresponds to the global_config.json file. This folder also provides a global_config.json file to connect to TTN Europe.

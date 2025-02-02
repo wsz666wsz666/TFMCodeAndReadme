@@ -1,0 +1,1 @@
+Python code for two Raspberry Pi and an SHM device, based on the WL55 STM32 core code. Check the raspAndstm32lora repository.
